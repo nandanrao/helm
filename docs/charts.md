@@ -173,12 +173,16 @@ dependencies:
   - name: mysql
     version: 3.2.1
     repository: http://another.example.com/charts
+  - name: mylocalsubchart
+    version: 0.1.0
 ```
 
 - The `name` field is the name of the chart you want.
 - The `version` field is the version of the chart you want.
 - The `repository` field is the full URL to the chart repository. Note
-  that you must also use `helm repo add` to add that repo locally.
+  that you must also use `helm repo add` to add that repo locally. If your
+  subchart is local, you can omit the repository field but still use the
+  other features of dependency management, such as tags and conditions.
 
 Once you have a dependencies file, you can run `helm dependency update`
 and it will use your dependency file to download all the specified
@@ -277,8 +281,8 @@ dependencies:
       - front-end
       - subchart1
 
+  # tags and conditions also work with local subcharts
   - name: subchart2
-    repository: http://localhost:10191
     version: 0.1.0
     condition: subchart2.enabled,global.subchart2.enabled
     tags:
